@@ -7,3 +7,12 @@ D:\Code\C# ITI\ChatUser\ChatUser\obj\Debug\ChatUser.Properties.Resources.resourc
 D:\Code\C# ITI\ChatUser\ChatUser\obj\Debug\ChatUser.csproj.GenerateResource.cache
 D:\Code\C# ITI\ChatUser\ChatUser\obj\Debug\ChatUser.exe
 D:\Code\C# ITI\ChatUser\ChatUser\obj\Debug\ChatUser.pdb
+D:\Code\C# ITI\Chat\ChatUser\ChatUser\bin\Debug\ChatUser.exe.config
+D:\Code\C# ITI\Chat\ChatUser\ChatUser\bin\Debug\ChatUser.exe
+D:\Code\C# ITI\Chat\ChatUser\ChatUser\bin\Debug\ChatUser.pdb
+D:\Code\C# ITI\Chat\ChatUser\ChatUser\obj\Debug\ChatUser.csprojAssemblyReference.cache
+D:\Code\C# ITI\Chat\ChatUser\ChatUser\obj\Debug\ChatUser.Form1.resources
+D:\Code\C# ITI\Chat\ChatUser\ChatUser\obj\Debug\ChatUser.Properties.Resources.resources
+D:\Code\C# ITI\Chat\ChatUser\ChatUser\obj\Debug\ChatUser.csproj.GenerateResource.cache
+D:\Code\C# ITI\Chat\ChatUser\ChatUser\obj\Debug\ChatUser.exe
+D:\Code\C# ITI\Chat\ChatUser\ChatUser\obj\Debug\ChatUser.pdb

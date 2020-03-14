@@ -38,6 +38,8 @@ namespace ChatUser
             doConnection();
 
             doRegist();
+
+            ReadMsgs();
         }
 
         private void doRegist()
@@ -82,6 +84,17 @@ namespace ChatUser
                     string[] Msg = msg.Split(new string[] { "#FailLogin#" }, StringSplitOptions.None);
                     MessageBox.Show(Msg[1]);
                 }
+                if (msg.StartsWith("#SuccessfulRegistration#") && msg.EndsWith("#SuccessfulRegistration#"))
+                {
+                    string[] Msg = msg.Split(new string[] { "#SuccessfulRegistration#" }, StringSplitOptions.None);
+                    MessageBox.Show(Msg[1]);
+                }
+                if (msg.StartsWith("#FailRegistration#") && msg.EndsWith("#FailRegistration#"))
+                {
+                    string[] Msg = msg.Split(new string[] { "#FailRegistration#" }, StringSplitOptions.None);
+                    MessageBox.Show(Msg[1]);
+                }
+
 
             }
         }

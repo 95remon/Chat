@@ -88,14 +88,30 @@ namespace ChatServer
 
         private void doRegistration(string msg)
         {
+            bool exist = false;
             string [] Msg = msg.Split(new string[] { "#Reg#" }, StringSplitOptions.None);
-            User user = new User
+            foreach (User item in users)
             {
-                Email = Msg[1],
-                Password = Msg[2],
-                Phone = Msg[3],
-            };
-            users.Add(user);
+                if (Msg[1].Equals(item.Email))
+                    exist = true;
+            }
+            if (!exist)
+            {
+                User user = new User
+                {
+                    Email = Msg[1],
+                    Password = Msg[2],
+                    Phone = Msg[3],
+                };
+                users.Add(user);
+                //SuccessfulRegistration
+                StreamWriter.WriteLine("#SuccessfulRegistration# Successfully Registration #SuccessfulRegistration#");
+            }
+            else
+            {
+                StreamWriter.WriteLine("#FailRegistration# Sorry this email is already registered #FailRegistration#");
+            }
+            
             //for (int i = 0; i < Msg.Length; i++)
             //{
             //    MessageBox.Show(Msg[i]);
