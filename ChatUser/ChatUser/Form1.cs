@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
+//using System.Runtime.Serialization;
+//using System.Runtime.Serialization.Formatters.Binary;
 
 
 namespace ChatUser
@@ -18,6 +20,9 @@ namespace ChatUser
     {
         StreamReader streamReader;
         StreamWriter streamWriter;
+        NetworkStream networkStream;
+        TcpClient tcpClient;
+        //IFormatter formatter;
 
         public Form1()
         {
@@ -26,12 +31,14 @@ namespace ChatUser
 
         private void doConnection()
         {
-            TcpClient tcpClient = new TcpClient("192.168.1.17", 5000);
+            tcpClient = new TcpClient("192.168.1.8", 5000);
 
-            NetworkStream networkStream = tcpClient.GetStream();
+            networkStream = tcpClient.GetStream();
+            //formatter = new BinaryFormatter();
             streamReader = new StreamReader(networkStream);
             streamWriter = new StreamWriter(networkStream);
             streamWriter.AutoFlush = true;
+            
         }
         private void btnReg_Click(object sender, EventArgs e)
         {
@@ -71,32 +78,102 @@ namespace ChatUser
 
         private async void ReadMsgs()
         {
-            while (true)
+            bool LogedIn = false;
+            while (!LogedIn)
             {
                 string msg = await streamReader.ReadLineAsync();
                 if (msg.StartsWith("#SuccessfulLogin#")&&msg.EndsWith("#SuccessfulLogin#")) 
                 {
+                    //User u = (User)formatter.Deserialize(networkStream);
                     string[] Msg = msg.Split(new string[] { "#SuccessfulLogin#" }, StringSplitOptions.None);
-                    MessageBox.Show(Msg[1]);
+                    MessageBox.Show(Msg[1]); //+ " "+ u.Email);
+                    ChatForm chatForm = new ChatForm(Msg[2]);
+                    chatForm.Show();
+                    this.Hide();
+                    tcpClient.Close();
+                    networkStream.Close();
+                    LogedIn = true;
+                    //tcpClient.Close();
                 }
-                if (msg.StartsWith("#FailLogin#") && msg.EndsWith("#FailLogin#"))
+                else if (msg.StartsWith("#FailLogin#") && msg.EndsWith("#FailLogin#"))
                 {
                     string[] Msg = msg.Split(new string[] { "#FailLogin#" }, StringSplitOptions.None);
                     MessageBox.Show(Msg[1]);
+
                 }
-                if (msg.StartsWith("#SuccessfulRegistration#") && msg.EndsWith("#SuccessfulRegistration#"))
+                else if (msg.StartsWith("#SuccessfulRegistration#") && msg.EndsWith("#SuccessfulRegistration#"))
                 {
                     string[] Msg = msg.Split(new string[] { "#SuccessfulRegistration#" }, StringSplitOptions.None);
                     MessageBox.Show(Msg[1]);
                 }
-                if (msg.StartsWith("#FailRegistration#") && msg.EndsWith("#FailRegistration#"))
+                else if (msg.StartsWith("#FailRegistration#") && msg.EndsWith("#FailRegistration#"))
                 {
                     string[] Msg = msg.Split(new string[] { "#FailRegistration#" }, StringSplitOptions.None);
                     MessageBox.Show(Msg[1]);
                 }
-
-
+                
+                
             }
+        }
+
+        private void OpenChat(string msg)
+        {
+            User user = new User();
+            if (msg.StartsWith("#UserName#")&&msg.EndsWith("#UserName#"))
+            {
+                string[] Msg = msg.Split(new string[] { "#UserName#" }, StringSplitOptions.None);
+                user.Name = Msg[1];
+            }
+            else if (msg.StartsWith("#UserPassword#") && msg.EndsWith("#UserPassword#"))
+            {
+                string[] Msg = msg.Split(new string[] { "#UserPassword#" }, StringSplitOptions.None);
+                user.Password = Msg[1];
+            }
+            else if (msg.StartsWith("#UserPhone#") && msg.EndsWith("#UserPhone#"))
+            {
+                string[] Msg = msg.Split(new string[] { "#UserPhone#" }, StringSplitOptions.None);
+                user.Phone = Msg[1];
+            }
+            else if (msg.StartsWith("#UserStatus#") && msg.EndsWith("#UserStatus#"))
+            {
+                string[] Msg = msg.Split(new string[] { "#UserStatus#" }, StringSplitOptions.None);
+                if (Msg[1].Equals("true"))
+                {
+                    user.Status = true;
+                }
+                else
+                {
+                    user.Status = false;
+                }
+            }
+            else if (msg.StartsWith("#UserEmail#") && msg.EndsWith("#UserEmail#"))
+            {
+                string[] Msg = msg.Split(new string[] { "#UserEmail#" }, StringSplitOptions.None);
+                user.Email = Msg[1];
+            }
+            else if (msg.StartsWith("#UserAddress#") && msg.EndsWith("#UserAddress#"))
+            {
+                string[] Msg = msg.Split(new string[] { "#UserAddress#" }, StringSplitOptions.None);
+                user.Address = Msg[1];
+            }
+            else if (msg.StartsWith("#UserFriend#") && msg.EndsWith("#UserFriend#"))
+            {
+                string[] Msg = msg.Split(new string[] { "#UserFriend#" }, StringSplitOptions.None);
+                for (int i = 1; i < Msg.Length-1; i++)
+                {
+                    string[] data = msg.Split(new string[] { "#m#" }, StringSplitOptions.None);
+                    bool tempStatus = false;
+                    if (data[3].Equals("true"))
+                    {
+                        tempStatus = true;
+                    }
+                    User tempUser = new User { Name = data[0], Email = data[1], Address = data[2], Status = tempStatus };
+                    user.Friends.Add(tempUser);
+                }
+            }
+
+
+
         }
     }
 }

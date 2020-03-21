@@ -16,3 +16,4 @@ D:\Code\C# ITI\Chat\ChatUser\ChatUser\obj\Debug\ChatUser.Properties.Resources.re
 D:\Code\C# ITI\Chat\ChatUser\ChatUser\obj\Debug\ChatUser.csproj.GenerateResource.cache
 D:\Code\C# ITI\Chat\ChatUser\ChatUser\obj\Debug\ChatUser.exe
 D:\Code\C# ITI\Chat\ChatUser\ChatUser\obj\Debug\ChatUser.pdb
+D:\Code\C# ITI\Chat\ChatUser\ChatUser\obj\Debug\ChatUser.ChatForm.resources

@@ -7,7 +7,7 @@ using System.Net.Sockets;
 using System.Net;
 using System.IO;
 
-namespace ChatServer
+namespace ChatUser
 {
     
     class User
@@ -18,14 +18,14 @@ namespace ChatServer
         public string Phone { get; set; }
         public bool Status { get; set; }
         public string Address { get; set; }
-        public  TcpClient Tcp { get; set; }
+        public TcpClient Tcp { get; set; }
         public List<User> Friends;
         public List<Chat> Chats;
 
 
         //public User(TcpClient tcpClient)
         //{
-            
+
         //}
     }
 }
