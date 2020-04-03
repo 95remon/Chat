@@ -21,23 +21,43 @@ namespace ChatUser
         TcpClient tcpClient;
 
         User user;
+        string userEmail="";
 
         int panelWidth;
         bool Hidden;
         public ChatForm(string LoginEmail)
         {
+            userEmail = LoginEmail;
             InitializeComponent();
+
+
             
             panelWidth = panelSide.Width;
             Hidden = false;
 
-            tcpClient = new TcpClient("192.168.1.8", 5000);
-            networkStream = tcpClient.GetStream();
-            streamReader = new StreamReader(networkStream);
-            streamWriter = new StreamWriter(networkStream);
-            streamWriter.AutoFlush = true;
-            OpenChat(LoginEmail);
 
+            user = new User();
+            user.Friends = new List<User>();
+            user.Chats = new List<Chat>();
+
+            //loginUC1.SendMsg += LoginUC1_SendMsg;
+
+        }
+
+
+        //private void LoginUC1_SendMsg(object sender, EventArgs e)
+        //{
+        //    string Info = "#Log#" + loginUC1.name + "#Log#" + loginUC1.password + "#Log#";
+        //    streamWriter.WriteLine(Info);
+        //}
+
+        private void ChatUC1_SendMsg(object sender, EventArgs e)
+        {
+            doConnection();
+            string Msg = "#AllMsg#" + chatUC1.MsgText + "#AllMsg#";
+            
+            streamWriter.WriteLine(Msg);
+            ReadMsgs();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -69,25 +89,29 @@ namespace ChatUser
             }
         }
 
-        private void OpenChat(string loginEmail)
+        private void doConnection()
         {
-            streamWriter.WriteLine("#GetUserInfo#"+ loginEmail+ "#GetUserInfo#");
+            tcpClient = new TcpClient("192.168.1.5", 5000);
+            networkStream = tcpClient.GetStream();
+            streamReader = new StreamReader(networkStream);
+            streamWriter = new StreamWriter(networkStream);
+            streamWriter.AutoFlush = true;
 
-            user = new User();
-            user.Friends = new List<User>();
-            user.Chats = new List<Chat>();
-            ReadMsgs();
-            
         }
+
 
         private async void ReadMsgs()
         {
             while (true)
             {
+
                 string msg = await streamReader.ReadLineAsync();
-
-
-                if (msg.StartsWith("#UserName#") && msg.EndsWith("#UserName#"))
+                if (msg.StartsWith("#AllMsg#") && msg.EndsWith("#AllMsg#"))
+                {
+                    string[] Msg = msg.Split(new string[] { "#AllMsg#" }, StringSplitOptions.None);
+                    MessageBox.Show(Msg[1]);
+                }
+                else if (msg.StartsWith("#UserName#") && msg.EndsWith("#UserName#"))
                 {
                     string[] Msg = msg.Split(new string[] { "#UserName#" }, StringSplitOptions.None);
                     user.Name = Msg[1];
@@ -192,6 +216,24 @@ namespace ChatUser
         private void button2_Click(object sender, EventArgs e)
         {
             MessageBox.Show(user.Email);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            doConnection();
+            string Msg = "#AllMsg#" + "hi" + "#AllMsg#";
+            streamWriter.WriteLine(Msg);
+            ReadMsgs();
+        }
+
+        private void ChatForm_Load(object sender, EventArgs e)
+        {
+            doConnection();
+            streamWriter.WriteLine("#GetUserInfo#" + userEmail + "#GetUserInfo#");
+            ReadMsgs();
+            chatUC1.SendMsg += ChatUC1_SendMsg;
+            
+
         }
     }
 }

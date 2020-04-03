@@ -21,7 +21,6 @@ namespace ChatServer
         StreamReader StreamReader;
         StreamWriter StreamWriter;
         TcpClient tcpClient;
-        //IFormatter formatter;
         List<User> users = new List<User>();
         public Form1()
         {
@@ -104,9 +103,10 @@ namespace ChatServer
 
         private async void startListn()
         {
-            IPAddress IP = IPAddress.Parse("192.168.1.8");
+            IPAddress IP = IPAddress.Parse("192.168.1.5");
             TcpListener tcpListener = new TcpListener(IP, 5000);
             tcpListener.Start();
+
             while (true)
             {
                 tcpClient = await tcpListener.AcceptTcpClientAsync();
@@ -128,6 +128,16 @@ namespace ChatServer
                 doLogin(msg);
             if (msg.StartsWith("#GetUserInfo#") && msg.EndsWith("#GetUserInfo#"))
                 getUserInfo(msg);
+            if (msg.StartsWith("#AllMsg#") && msg.EndsWith("#AllMsg#"))
+                allMsg(msg);
+        }
+
+        private void allMsg(string msg)
+        {
+            foreach (User item in users)
+            {
+                item.MsgReceived(msg);
+            }
         }
 
         private void getUserInfo(string msg)
@@ -139,6 +149,7 @@ namespace ChatServer
                 if (item.Email.Equals(Msg[1]))
                 {
                     item.Address = tcpClient.Client.RemoteEndPoint.ToString();
+                    item.Tcp = tcpClient;
                     LogedUser = item;
                 }
             }
@@ -212,15 +223,13 @@ namespace ChatServer
 
         private void successfullyLogin(User item)
         {
-
             string userIp = tcpClient.Client.RemoteEndPoint.ToString();
             //item.Tcp = tcpClient;
             item.Address = userIp;
+            item.Status = true;
             //formatter = new BinaryFormatter();
             //formatter.Serialize(networkStream, item);
             StreamWriter.WriteLine("#SuccessfulLogin# Login Successfully #SuccessfulLogin#" + item.Email + "#SuccessfulLogin#");
-            
-
         }
 
         private void doRegistration(string msg)
@@ -239,6 +248,7 @@ namespace ChatServer
                     Email = Msg[1],
                     Password = Msg[2],
                     Phone = Msg[3],
+                    Tcp = tcpClient,
                 };
                 users.Add(user);
                 //SuccessfulRegistration
@@ -254,6 +264,11 @@ namespace ChatServer
             //    MessageBox.Show(Msg[i]);
             //}
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            StreamWriter.WriteLine("HELLO");
         }
     }
 }

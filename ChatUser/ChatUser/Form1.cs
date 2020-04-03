@@ -23,7 +23,7 @@ namespace ChatUser
         NetworkStream networkStream;
         TcpClient tcpClient;
         //IFormatter formatter;
-
+        bool LogedIn = false;
         public Form1()
         {
             InitializeComponent();
@@ -31,10 +31,8 @@ namespace ChatUser
 
         private void doConnection()
         {
-            tcpClient = new TcpClient("192.168.1.8", 5000);
-
+            tcpClient = new TcpClient("192.168.1.5", 5000);
             networkStream = tcpClient.GetStream();
-            //formatter = new BinaryFormatter();
             streamReader = new StreamReader(networkStream);
             streamWriter = new StreamWriter(networkStream);
             streamWriter.AutoFlush = true;
@@ -78,21 +76,25 @@ namespace ChatUser
 
         private async void ReadMsgs()
         {
-            bool LogedIn = false;
+            
             while (!LogedIn)
             {
                 string msg = await streamReader.ReadLineAsync();
                 if (msg.StartsWith("#SuccessfulLogin#")&&msg.EndsWith("#SuccessfulLogin#")) 
                 {
+                    
                     //User u = (User)formatter.Deserialize(networkStream);
                     string[] Msg = msg.Split(new string[] { "#SuccessfulLogin#" }, StringSplitOptions.None);
                     MessageBox.Show(Msg[1]); //+ " "+ u.Email);
+                    //networkStream.Close();
+                    //tcpClient.Close();
+                    //streamReader.Close();
+                    //streamWriter.Close();
                     ChatForm chatForm = new ChatForm(Msg[2]);
                     chatForm.Show();
-                    this.Hide();
-                    tcpClient.Close();
-                    networkStream.Close();
+                    //this.Hide();
                     LogedIn = true;
+                    
                     //tcpClient.Close();
                 }
                 else if (msg.StartsWith("#FailLogin#") && msg.EndsWith("#FailLogin#"))
