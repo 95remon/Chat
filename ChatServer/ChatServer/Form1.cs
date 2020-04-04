@@ -91,8 +91,73 @@ namespace ChatServer
                 },
 
             };
+            User testUser2 = new User
+            {
+                Name = "aly",
+                Email = "aly",
+                Password = "123456",
+                Phone = "010",
+                Address = "11111",
+                Status = false,
+                Friends = new List<User>
+                {
+                    new User
+                    {
+                        Name = "Ali",
+                        Email = "Ali",
+                        Password = "123456",
+                        Phone = "010",
+                        Address = "123123",
+                        Status = false
+                    }
+                },
+                Chats = new List<Chat>
+                {
+                    new Chat
+                    {
+                        Members = new List<User>
+                        {
+                            new User
+                            {
+                                Name = "ali",
+                                Email = "ali",
+                                Password = "123456",
+                                Phone = "010",
+                                Address = "123444",
+                                Status = false
+                            },
+                            new User
+                            {
+                                Name = "mostafa",
+                                Email = "mostafa",
+                                Password = "123456",
+                                Phone = "010",
+                                Address = "123455",
+                                Status = false
+                            }
 
+                        },
+                        Msgs = new List<Msg>
+                        {
+                            new Msg
+                            {
+                                Sender = "remon",
+                                Content= "hello",
+                                DateTime = DateTime.Now
+                            },
+                            new Msg
+                            {
+                                Sender = "ali",
+                                Content= "bye",
+                                DateTime = DateTime.Now
+                            }
+                        }
+                    }
+                },
+
+            };
             users.Add(testUser);
+            users.Add(testUser2);
 
         }
 
@@ -128,17 +193,10 @@ namespace ChatServer
                 doLogin(msg);
             if (msg.StartsWith("#GetUserInfo#") && msg.EndsWith("#GetUserInfo#"))
                 getUserInfo(msg);
-            if (msg.StartsWith("#AllMsg#") && msg.EndsWith("#AllMsg#"))
-                allMsg(msg);
+            
         }
 
-        private void allMsg(string msg)
-        {
-            foreach (User item in users)
-            {
-                item.MsgReceived(msg);
-            }
-        }
+        
 
         private void getUserInfo(string msg)
         {
@@ -150,53 +208,66 @@ namespace ChatServer
                 {
                     item.Address = tcpClient.Client.RemoteEndPoint.ToString();
                     item.Tcp = tcpClient;
+                    item.MsgReceived += User_MsgReceived;
+                    item.sendInfo();
                     LogedUser = item;
+
                 }
             }
-            StreamWriter.WriteLine("#UserName#" + LogedUser.Name + "#UserName#");
-            StreamWriter.WriteLine("#UserPassword#" + LogedUser.Password + "#UserPassword#");
-            StreamWriter.WriteLine("#UserPhone#" + LogedUser.Phone + "#UserPhone#");
-            StreamWriter.WriteLine("#UserStatus#" + LogedUser.Status + "#UserStatus#");
-            //StreamWriter.WriteLine("#UserTcp#"+item.Tcp+"#UserTCP#");
-            StreamWriter.WriteLine("#UserEmail#" + LogedUser.Email + "#UserEmail#");
-            StreamWriter.WriteLine("#UserAddress#" + LogedUser.Address + "#UserAddress#");
-            string UserFriends = "#UserFriend#";
-            foreach (User friend in LogedUser.Friends)
-            {
-                UserFriends += friend.Name + "#m#" + friend.Email + "#m#" + friend.Address + "#m#" + friend.Status + "#UserFriend#";
-            }
-            StreamWriter.WriteLine(UserFriends);
+            //StreamWriter.WriteLine("#UserName#" + LogedUser.Name + "#UserName#");
+            //StreamWriter.WriteLine("#UserPassword#" + LogedUser.Password + "#UserPassword#");
+            //StreamWriter.WriteLine("#UserPhone#" + LogedUser.Phone + "#UserPhone#");
+            //StreamWriter.WriteLine("#UserStatus#" + LogedUser.Status + "#UserStatus#");
+            ////StreamWriter.WriteLine("#UserTcp#"+item.Tcp+"#UserTCP#");
+            //StreamWriter.WriteLine("#UserEmail#" + LogedUser.Email + "#UserEmail#");
+            //StreamWriter.WriteLine("#UserAddress#" + LogedUser.Address + "#UserAddress#");
+            //string UserFriends = "#UserFriend#";
+            //foreach (User friend in LogedUser.Friends)
+            //{
+            //    UserFriends += friend.Name + "#m#" + friend.Email + "#m#" + friend.Address + "#m#" + friend.Status + "#UserFriend#";
+            //}
+            //StreamWriter.WriteLine(UserFriends);
 
-            //string numOfChats = "#numOfChats#" + item.Chats.Count+ "#numOfChats#";
-            //StreamWriter.WriteLine(numOfChats);
+            ////string numOfChats = "#numOfChats#" + item.Chats.Count+ "#numOfChats#";
+            ////StreamWriter.WriteLine(numOfChats);
 
-            string UserChats = "#UserChat#";
-            foreach (Chat chat in LogedUser.Chats)
-            {
-                //string numOfMembers = "#numOfMembers#" + chat.Members.Count + "#numOfMembers#";
-                //StreamWriter.WriteLine(numOfMembers);
+            //string UserChats = "#UserChat#";
+            //foreach (Chat chat in LogedUser.Chats)
+            //{
+            //    //string numOfMembers = "#numOfMembers#" + chat.Members.Count + "#numOfMembers#";
+            //    //StreamWriter.WriteLine(numOfMembers);
 
-                string MemberInfo = "#MemberInfo#";
-                foreach (User user in chat.Members)
+            //    string MemberInfo = "#MemberInfo#";
+            //    foreach (User user in chat.Members)
+            //    {
+            //        MemberInfo += user.Name + "#m#" + user.Email + "#m#" + user.Status + "#m#" + user.Address + "#MemberInfo#";
+            //    }
+            //    //StreamWriter.WriteLine(MemberInfo);
+            //    UserChats += MemberInfo + "###m###";
+
+            //    //string numOfMsgs = "#numOfMsgs#" + chat.Msgs.Count + "#numOfMsgs#";
+            //    //StreamWriter.WriteLine(numOfMsgs);
+
+            //    string MsgInfo = "#MsgInfo#";
+            //    foreach (Msg msgItem in chat.Msgs)
+            //    {
+            //        MsgInfo += msgItem.Sender + "#m#" + msgItem.DateTime + "#m#" + msgItem.Content + "#MsgInfo#";
+            //    }
+            //    //StreamWriter.WriteLine(MsgInfo);
+            //    UserChats += MsgInfo + "#UserChat#";
+            //}
+            //StreamWriter.WriteLine(UserChats);
+            ////StreamWriter.WriteLine("#Done# done msg #Done#");
+
+        }
+
+        private void User_MsgReceived(string msg)
+        {
+            if (msg.StartsWith("#AllMsg#") && msg.EndsWith("#AllMsg#"))
+                foreach (User User in users)
                 {
-                    MemberInfo += user.Name + "#m#" + user.Email + "#m#" + user.Status + "#m#" + user.Address + "#MemberInfo#";
+                    User.SendMsg(msg); 
                 }
-                //StreamWriter.WriteLine(MemberInfo);
-                UserChats += MemberInfo + "###m###";
-
-                //string numOfMsgs = "#numOfMsgs#" + chat.Msgs.Count + "#numOfMsgs#";
-                //StreamWriter.WriteLine(numOfMsgs);
-
-                string MsgInfo = "#MsgInfo#";
-                foreach (Msg msgItem in chat.Msgs)
-                {
-                    MsgInfo += msgItem.Sender + "#m#" + msgItem.DateTime + "#m#" + msgItem.Content + "#MsgInfo#";
-                }
-                //StreamWriter.WriteLine(MsgInfo);
-                UserChats += MsgInfo + "#UserChat#";
-            }
-            StreamWriter.WriteLine(UserChats);
-
         }
 
         private void doLogin(string msg)

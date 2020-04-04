@@ -86,10 +86,10 @@ namespace ChatUser
                     //User u = (User)formatter.Deserialize(networkStream);
                     string[] Msg = msg.Split(new string[] { "#SuccessfulLogin#" }, StringSplitOptions.None);
                     MessageBox.Show(Msg[1]); //+ " "+ u.Email);
-                    //networkStream.Close();
-                    //tcpClient.Close();
-                    //streamReader.Close();
-                    //streamWriter.Close();
+                    networkStream.Close();
+                    tcpClient.Close();
+                    streamReader.Close();
+                    streamWriter.Close();
                     ChatForm chatForm = new ChatForm(Msg[2]);
                     chatForm.Show();
                     //this.Hide();
@@ -101,6 +101,7 @@ namespace ChatUser
                 {
                     string[] Msg = msg.Split(new string[] { "#FailLogin#" }, StringSplitOptions.None);
                     MessageBox.Show(Msg[1]);
+                   
 
                 }
                 else if (msg.StartsWith("#SuccessfulRegistration#") && msg.EndsWith("#SuccessfulRegistration#"))

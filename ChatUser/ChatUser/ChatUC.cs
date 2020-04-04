@@ -37,5 +37,12 @@ namespace ChatUser
                 SendMsg(this, e);
             textBox1.Text="";
         }
+
+        public void ReceivedMsg(String msg)
+        {
+            MsgUC NewMsg = new MsgUC();
+            NewMsg.Msg = msg;
+            flowLayoutPanel1.Controls.Add(NewMsg);
+        }
     }
 }
