@@ -17,7 +17,8 @@ D:\Code\C# ITI\Chat\ChatUser\ChatUser\obj\Debug\ChatUser.exe
 D:\Code\C# ITI\Chat\ChatUser\ChatUser\obj\Debug\ChatUser.pdb
 D:\Code\C# ITI\Chat\ChatUser\ChatUser\obj\Debug\ChatUser.ChatForm.resources
 D:\Code\C# ITI\Chat\ChatUser\ChatUser\obj\Debug\ChatUser.ChatUC.resources
-D:\Code\C# ITI\Chat\ChatUser\ChatUser\obj\Debug\ChatUser.FriendsUC.resources
 D:\Code\C# ITI\Chat\ChatUser\ChatUser\obj\Debug\ChatUser.MsgUC.resources
 D:\Code\C# ITI\Chat\ChatUser\ChatUser\obj\Debug\ChatUser.LoginUC.resources
+D:\Code\C# ITI\Chat\ChatUser\ChatUser\obj\Debug\ChatUser.ContactUC.resources
+D:\Code\C# ITI\Chat\ChatUser\ChatUser\obj\Debug\ChatUser.ListUC.resources
 D:\Code\C# ITI\Chat\ChatUser\ChatUser\obj\Debug\ChatUser.csprojAssemblyReference.cache

@@ -12,6 +12,8 @@ namespace ChatUser
 {
     public partial class ContactUC : UserControl
     {
+        //public event EventHandler ContactDoubleClick;
+
         public ContactUC()
         {
             InitializeComponent();
@@ -34,5 +36,31 @@ namespace ChatUser
             set { labelState.Text = value; } 
         }
 
+
+        public new event EventHandler DoubleClick
+        {
+            add
+            {
+                base.DoubleClick += value;
+                foreach (Control control in Controls)
+                {
+                    control.DoubleClick += value;
+                }
+            }
+            remove
+            {
+                base.DoubleClick -= value;
+                foreach (Control control in Controls)
+                {
+                    control.DoubleClick -= value;
+                }
+            }
+        }
+        //private void ContactUC_MouseDoubleClick(object sender, MouseEventArgs e)
+        //{
+        //    if (ContactDoubleClick != null)
+        //        ContactDoubleClick(this, e);
+
+        //}
     }
 }

@@ -26,6 +26,10 @@ namespace ChatUser
         int panelWidth;
         bool Hidden;
 
+        string userNameFlag = "";
+
+
+
         public ChatForm(string LoginEmail)
         {
             userEmail = LoginEmail;
@@ -39,10 +43,28 @@ namespace ChatUser
             user = new User();
             user.Friends = new List<User>();
             user.Chats = new List<Chat>();
-            chatUC1.SendMsg += ChatUC1_SendMsg;
+            
 
             //loginUC1.SendMsg += LoginUC1_SendMsg;
 
+        }
+
+        internal static void Contact_DoubleClick(object sender, EventArgs e)
+        {
+            ContactUC parent ;
+            if (sender.GetType().Name=="Label")
+            {
+                parent = (ContactUC)((Label)sender).Parent;
+            }
+            else if (sender.GetType().Name == "PictureBox")
+            {
+                parent = (ContactUC)((PictureBox)sender).Parent;
+            }
+            else
+            {
+                parent = (ContactUC)sender;
+            }
+            MessageBox.Show(parent.txtName);
         }
 
 
@@ -53,14 +75,8 @@ namespace ChatUser
         //}
 
         private void ChatUC1_SendMsg(object sender, EventArgs e)
-        {
-            //networkStream.Close();
-            //tcpClient.Close();
-            //streamReader.Close();
-            //streamWriter.Close();
-            //streamReader.ReadToEndAsync();
-
-            //doConnection();
+            {
+            
             string Msg = "#AllMsg#" + chatUC1.MsgText + "#AllMsg#";
             
             streamWriter.WriteLine(Msg);
@@ -105,7 +121,9 @@ namespace ChatUser
             streamReader = new StreamReader(networkStream);
             streamWriter = new StreamWriter(networkStream);
             streamWriter.AutoFlush = true;
+            chatUC1.SendMsg += ChatUC1_SendMsg;
             
+            ReadMsgs();
 
         }
 
@@ -191,7 +209,7 @@ namespace ChatUser
                         {
                             string[] MemberInfo = ChatMembers[j].Split(new string[] { "#m#" }, StringSplitOptions.None);
                             bool tempStatus = false;
-                            if (MemberInfo[2].Equals("true"))
+                            if (MemberInfo[2].Equals("True"))
                                 tempStatus = true;
                             User TempUser = new User
                             {
@@ -217,10 +235,21 @@ namespace ChatUser
                         user.Chats.Add(TempChat);
                     }
                 }
+                else if (msg.StartsWith("#OnlineUsers#") && msg.EndsWith("#OnlineUsers#"))
+                {
+                    string[] Msg = msg.Split(new string[] { "#OnlineUsers#" }, StringSplitOptions.None);
+                    for (int i = 1; i < Msg.Length - 1; i++)
+                    {
+                        string[] data = Msg[i].Split(new string[] { "#m#" }, StringSplitOptions.None);
+                        //User tempUser = new User { Name = data[0], Email = data[1], Status = tempStatus };
+                        listUC2.AddToList(data[0], data[2]);
+                    }
+                }
                 //else if(msg.StartsWith("#Done#") && msg.EndsWith("#Done#"))
                 //{
                 //    Done = true;
                 //}
+
             }
         }
 
@@ -229,10 +258,7 @@ namespace ChatUser
             Application.Exit();
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(user.Email);
-        }
+       
 
         private void button3_Click(object sender, EventArgs e)
         {
@@ -246,10 +272,34 @@ namespace ChatUser
         {
             doConnection();
             streamWriter.WriteLine("#GetUserInfo#" + userEmail + "#GetUserInfo#");
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
             
-            ReadMsgs();
+            listUC1.BringToFront();
+            FillFriendList();
+        }
+        private void button2_Click(object sender, EventArgs e)
+        {
+            chatUC1.BringToFront();
+            listUC2.BringToFront();
+            streamWriter.WriteLine("#OnlineUsers# get online users #OnlineUsers#");
             
-            
+
+        }
+
+        private void FillFriendList()
+        {
+            foreach (User friend in user.Friends)
+            {
+                string sta="False";
+                if (friend.Status)
+                {
+                    sta = "True";
+                }
+                listUC1.AddToList(friend.Name, sta);
+            }
         }
     }
 }

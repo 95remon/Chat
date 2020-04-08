@@ -298,9 +298,23 @@ namespace ChatServer
             //item.Tcp = tcpClient;
             item.Address = userIp;
             item.Status = true;
+            UpdateOnlineUsers(item);
             //formatter = new BinaryFormatter();
             //formatter.Serialize(networkStream, item);
             StreamWriter.WriteLine("#SuccessfulLogin# Login Successfully #SuccessfulLogin#" + item.Email + "#SuccessfulLogin#");
+        }
+
+        private void UpdateOnlineUsers(User item)
+        {
+            List<User> onlineUsers = new List<User>();
+            foreach (User user in users)
+            {
+                if (user.Status)
+                {
+                    onlineUsers.Add(user);
+                }
+            }
+            item.OnlineUsers = onlineUsers;
         }
 
         private void doRegistration(string msg)

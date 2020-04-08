@@ -24,6 +24,7 @@ namespace ChatServer
         public List<User> Friends;
         public List<Chat> Chats;
         public Chat publicChat;
+        public List<User> OnlineUsers;
 
         StreamReader StreamReader;
         StreamWriter StreamWriter;
@@ -47,6 +48,15 @@ namespace ChatServer
                 string msg = await StreamReader.ReadLineAsync();
                 if (MsgReceived != null)
                     MsgReceived(msg);
+                if(msg.StartsWith("#OnlineUsers#") && msg.EndsWith("#OnlineUsers#"))
+                {
+                    string onlineUsers = "#OnlineUsers#";
+                    foreach (User user in OnlineUsers)
+                    {
+                        onlineUsers += user.Email + "#m#" +user.Name + "#m#" + user.Status + "#OnlineUsers#";
+                    }
+                    SendMsg(onlineUsers);
+                }
             }
         }
 

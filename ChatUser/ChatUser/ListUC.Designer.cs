@@ -1,6 +1,6 @@
 ﻿namespace ChatUser
 {
-    partial class FriendsUC
+    partial class ListUC
     {
         /// <summary> 
         /// Required designer variable.
@@ -33,18 +33,18 @@
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(250, 470);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(241, 461);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
-            // FriendsUC
+            // ListUC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.Controls.Add(this.flowLayoutPanel1);
-            this.Name = "FriendsUC";
+            this.Name = "ListUC";
             this.Size = new System.Drawing.Size(250, 470);
             this.ResumeLayout(false);
 

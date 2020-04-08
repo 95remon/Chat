@@ -40,6 +40,8 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.panelSide = new System.Windows.Forms.Panel();
+            this.listUC2 = new ChatUser.ListUC();
+            this.listUC1 = new ChatUser.ListUC();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -47,6 +49,7 @@
             this.chatUC1 = new ChatUser.ChatUC();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panelSide.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel4.SuspendLayout();
             this.SuspendLayout();
@@ -119,6 +122,7 @@
             this.button4.Size = new System.Drawing.Size(30, 33);
             this.button4.TabIndex = 5;
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button3
             // 
@@ -159,11 +163,31 @@
             // panelSide
             // 
             this.panelSide.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.panelSide.Controls.Add(this.listUC2);
+            this.panelSide.Controls.Add(this.listUC1);
             this.panelSide.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelSide.Location = new System.Drawing.Point(40, 30);
             this.panelSide.Name = "panelSide";
             this.panelSide.Size = new System.Drawing.Size(250, 470);
             this.panelSide.TabIndex = 2;
+            // 
+            // listUC2
+            // 
+            this.listUC2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.listUC2.Location = new System.Drawing.Point(5, 3);
+            this.listUC2.Margin = new System.Windows.Forms.Padding(5);
+            this.listUC2.Name = "listUC2";
+            this.listUC2.Size = new System.Drawing.Size(240, 462);
+            this.listUC2.TabIndex = 1;
+            // 
+            // listUC1
+            // 
+            this.listUC1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.listUC1.Location = new System.Drawing.Point(4, 4);
+            this.listUC1.Margin = new System.Windows.Forms.Padding(5);
+            this.listUC1.Name = "listUC1";
+            this.listUC1.Size = new System.Drawing.Size(241, 461);
+            this.listUC1.TabIndex = 0;
             // 
             // timer1
             // 
@@ -206,10 +230,10 @@
             // chatUC1
             // 
             this.chatUC1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
-            this.chatUC1.Location = new System.Drawing.Point(3, 0);
+            this.chatUC1.Location = new System.Drawing.Point(6, 3);
             this.chatUC1.MsgText = "";
             this.chatUC1.Name = "chatUC1";
-            this.chatUC1.Size = new System.Drawing.Size(507, 470);
+            this.chatUC1.Size = new System.Drawing.Size(501, 464);
             this.chatUC1.TabIndex = 2;
             // 
             // ChatForm
@@ -231,6 +255,7 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
+            this.panelSide.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
@@ -255,5 +280,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel4;
         private ChatUC chatUC1;
+        private ListUC listUC1;
+        private ListUC listUC2;
     }
 }
