@@ -22,3 +22,4 @@ D:\Code\C# ITI\Chat\ChatUser\ChatUser\obj\Debug\ChatUser.LoginUC.resources
 D:\Code\C# ITI\Chat\ChatUser\ChatUser\obj\Debug\ChatUser.ContactUC.resources
 D:\Code\C# ITI\Chat\ChatUser\ChatUser\obj\Debug\ChatUser.ListUC.resources
 D:\Code\C# ITI\Chat\ChatUser\ChatUser\obj\Debug\ChatUser.csprojAssemblyReference.cache
+D:\Code\C# ITI\Chat\ChatUser\ChatUser\obj\Debug\ChatUser.InBoxUC.resources

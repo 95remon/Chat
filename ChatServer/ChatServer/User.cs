@@ -45,7 +45,7 @@ namespace ChatServer
         {
             while (true)
             {
-                string msg = await StreamReader.ReadLineAsync();
+                 string msg = await StreamReader.ReadLineAsync();
                 if (MsgReceived != null)
                     MsgReceived(msg);
                 if(msg.StartsWith("#OnlineUsers#") && msg.EndsWith("#OnlineUsers#"))

@@ -56,6 +56,12 @@
     <Compile Include="ChatUC.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="InBoxUC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="InBoxUC.Designer.cs">
+      <DependentUpon>InBoxUC.cs</DependentUpon>
+    </Compile>
     <Compile Include="ListUC.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -98,6 +104,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ChatUC.resx">
       <DependentUpon>ChatUC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InBoxUC.resx">
+      <DependentUpon>InBoxUC.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ListUC.resx">
       <DependentUpon>ListUC.cs</DependentUpon>

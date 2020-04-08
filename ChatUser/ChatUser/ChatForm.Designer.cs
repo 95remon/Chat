@@ -165,7 +165,6 @@
             this.panelSide.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.panelSide.Controls.Add(this.listUC2);
             this.panelSide.Controls.Add(this.listUC1);
-            this.panelSide.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelSide.Location = new System.Drawing.Point(40, 30);
             this.panelSide.Name = "panelSide";
             this.panelSide.Size = new System.Drawing.Size(250, 470);
@@ -174,19 +173,19 @@
             // listUC2
             // 
             this.listUC2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.listUC2.Location = new System.Drawing.Point(5, 3);
+            this.listUC2.Location = new System.Drawing.Point(0, 0);
             this.listUC2.Margin = new System.Windows.Forms.Padding(5);
             this.listUC2.Name = "listUC2";
-            this.listUC2.Size = new System.Drawing.Size(240, 462);
+            this.listUC2.Size = new System.Drawing.Size(250, 470);
             this.listUC2.TabIndex = 1;
             // 
             // listUC1
             // 
             this.listUC1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.listUC1.Location = new System.Drawing.Point(4, 4);
+            this.listUC1.Location = new System.Drawing.Point(0, 0);
             this.listUC1.Margin = new System.Windows.Forms.Padding(5);
             this.listUC1.Name = "listUC1";
-            this.listUC1.Size = new System.Drawing.Size(241, 461);
+            this.listUC1.Size = new System.Drawing.Size(250, 467);
             this.listUC1.TabIndex = 0;
             // 
             // timer1
@@ -218,10 +217,12 @@
             // 
             // panel4
             // 
+            this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel4.Controls.Add(this.chatUC1);
             this.panel4.Controls.Add(this.label2);
             this.panel4.Controls.Add(this.pictureBox1);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(290, 30);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(510, 470);
